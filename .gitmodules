@@ -1,0 +1,4 @@
+[submodule "color-extractor"]
+	path = color-extractor
+	url = https://github.com/thephpleague/color-extractor.git
+	branch = master
