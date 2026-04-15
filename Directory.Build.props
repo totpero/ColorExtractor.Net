@@ -1,0 +1,23 @@
+<Project>
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Version>0.1.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- NuGet package metadata -->
+    <Authors>totpero</Authors>
+    <Company>totpero</Company>
+    <Copyright>Copyright (c) totpero</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/totpero/ColorExtractor.Net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/totpero/ColorExtractor.Net</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>color;extractor;palette;image;ciede2000;lab</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+</Project>

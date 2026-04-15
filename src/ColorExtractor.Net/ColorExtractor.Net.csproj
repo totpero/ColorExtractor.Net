@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>ColorExtractor.Net</RootNamespace>
+
+    <!-- NuGet package -->
+    <PackageId>ColorExtractor.Net</PackageId>
+    <Description>Extract colors from an image the way a human would. A .NET port of thephpleague/color-extractor. Uses CIE Lab color space and CIEDE2000 delta-E to select visually distinct, prominent colors from images (PNG, JPEG, GIF, WebP, BMP, TGA).</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
