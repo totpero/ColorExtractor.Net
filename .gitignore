@@ -419,3 +419,7 @@ FodyWeavers.xsd
 
 # NuGet pack output
 nupkgs/
+
+# Icon generator local output
+tools/GenerateIcon/bin/
+tools/GenerateIcon/obj/

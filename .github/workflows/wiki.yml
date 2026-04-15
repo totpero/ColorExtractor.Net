@@ -1,0 +1,78 @@
+name: Sync Wiki
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'wiki/**'
+      - 'README.md'
+      - '.github/workflows/wiki.yml'
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-wiki:
+    name: Sync wiki pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Home.md from README
+        run: |
+          mkdir -p wiki-build
+          # Copy authored wiki pages
+          if [ -d wiki ]; then
+            cp -a wiki/. wiki-build/
+          fi
+          # Regenerate Home.md from README.md so it stays in sync with the site/docs.
+          # Strip the top HTML header block (everything up to the first "---" separator
+          # in README) so the wiki home looks native instead of repeating shields.
+          awk '
+            BEGIN { skip = 1 }
+            /^---[[:space:]]*$/ && skip == 1 { skip = 0; next }
+            skip == 0 { print }
+          ' README.md > wiki-build/_readme-body.md
+
+          cat > wiki-build/Home.md <<'HOME_EOF'
+          # ColorExtractor.Net
+
+          **Extract colors from an image the way a human would — in .NET.**
+
+          A cross-platform .NET port of [thephpleague/color-extractor](https://github.com/thephpleague/color-extractor).
+
+          ## Pages
+
+          - [[Installation]]
+          - [[Quick Start]]
+          - [[Library Usage]]
+          - [[Algorithm]]
+          - [[PHP Compatibility]]
+          - [[Building from Source]]
+          - [[Contributing]]
+
+          ## Links
+
+          - [GitHub Repository](https://github.com/totpero/ColorExtractor.Net)
+          - [NuGet: ColorExtractor.Net](https://www.nuget.org/packages/ColorExtractor.Net)
+
+          ---
+
+          HOME_EOF
+          # Strip the 10-space YAML indentation the heredoc captured above.
+          sed -i 's/^          //' wiki-build/Home.md
+          cat wiki-build/_readme-body.md >> wiki-build/Home.md
+          rm wiki-build/_readme-body.md
+
+          echo "--- generated wiki pages ---"
+          ls -la wiki-build/
+
+      - name: Sync wiki
+        uses: Andrew-Chen-Wang/github-wiki-action@v4
+        with:
+          path: wiki-build/
+          token: ${{ secrets.GITHUB_TOKEN }}

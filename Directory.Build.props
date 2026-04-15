@@ -27,7 +27,13 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>color;extractor;palette;image;ciede2000;lab;dominant-color;imagesharp</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
+
+  <!-- Pack the repo-root icon into every packable project. -->
+  <ItemGroup Condition="'$(IsPackable)' != 'false' And Exists('$(MSBuildThisFileDirectory)icon.png')">
+    <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
 
   <!-- SourceLink for every packable project -->
   <ItemGroup Condition="'$(IsPackable)' != 'false'">
