@@ -1,17 +1,15 @@
-<p align="center">
-  <b>ColorExtractor.Net</b>
-  <br>
-  <i>Extract colors from an image the way a human would, in .NET</i>
-  <br>
-  <i>A .NET port of <a href="https://github.com/thephpleague/color-extractor">thephpleague/color-extractor</a></i>
-</p>
+![ColorExtractor.Net logo](https://raw.githubusercontent.com/totpero/ColorExtractor.Net/main/assets/logo-readme.png)
 
-<p align="center">
-  <a href="https://dotnet.microsoft.com/download"><img src="https://img.shields.io/badge/.NET-8.0%20|%209.0%20|%2010.0-512BD4?logo=dotnet" alt=".NET 8.0 | 9.0 | 10.0"></a>
-  <a href="https://github.com/totpero/ColorExtractor.Net/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License: Apache 2.0"></a>
-  <a href="https://www.nuget.org/packages/ColorExtractor.Net"><img src="https://img.shields.io/nuget/v/ColorExtractor.Net?label=ColorExtractor.Net&logo=nuget" alt="NuGet ColorExtractor.Net"></a>
-  <a href="https://www.nuget.org/packages/ColorExtractor.Net"><img src="https://img.shields.io/nuget/dt/ColorExtractor.Net?label=downloads&logo=nuget" alt="NuGet Downloads"></a>
-</p>
+# ColorExtractor.Net
+
+*Extract colors from an image the way a human would, in .NET.*
+
+*A .NET port of [thephpleague/color-extractor](https://github.com/thephpleague/color-extractor).*
+
+[![.NET 8.0 | 9.0 | 10.0](https://img.shields.io/badge/.NET-8.0%20%7C%209.0%20%7C%2010.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/totpero/ColorExtractor.Net/blob/main/LICENSE)
+[![NuGet ColorExtractor.Net](https://img.shields.io/nuget/v/ColorExtractor.Net?label=ColorExtractor.Net&logo=nuget)](https://www.nuget.org/packages/ColorExtractor.Net)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/ColorExtractor.Net?label=downloads&logo=nuget)](https://www.nuget.org/packages/ColorExtractor.Net)
 
 ---
 
