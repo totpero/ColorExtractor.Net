@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ColorExtractor.Net/ColorExtractor.Net.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ColorExtractor.Net.Tests/ColorExtractor.Net.Tests.csproj" />
+  </Folder>
+</Solution>
