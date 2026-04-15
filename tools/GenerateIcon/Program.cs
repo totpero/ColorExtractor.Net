@@ -101,8 +101,16 @@ image.Mutate(ctx =>
     }
 });
 
-image.Save(outputPath);
-Console.WriteLine($"Wrote {outputPath} ({size}x{size})");
+// Downscale the rendered 512x512 artwork to a smaller final icon. This keeps the
+// image crisp (anti-aliased from a larger source) but produces a file whose
+// natural size looks good inline in GitHub README / NuGet markdown — neither of
+// which accept HTML-based sizing. Sherlock.Net uses the same trick.
+const int finalSize = 216;
+using (var final = image.Clone(c => c.Resize(finalSize, finalSize)))
+{
+    final.Save(outputPath);
+}
+Console.WriteLine($"Wrote {outputPath} ({finalSize}x{finalSize}, downscaled from {size}x{size})");
 
 static IPath BuildRoundedRect(float x, float y, float w, float h, float r)
 {
