@@ -416,3 +416,10 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# NuGet pack output
+nupkgs/
+
+# Icon generator local output
+tools/GenerateIcon/bin/
+tools/GenerateIcon/obj/
