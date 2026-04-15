@@ -5,19 +5,32 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <Version>0.1.0</Version>
+
+    <!-- NuGet package defaults (test projects opt out via IsPackable=false) -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- Deterministic + SourceLink (debug step into NuGet sources) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
 
     <!-- NuGet package metadata -->
     <Authors>totpero</Authors>
     <Company>totpero</Company>
     <Copyright>Copyright (c) totpero</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/totpero/ColorExtractor.Net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/totpero/ColorExtractor.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>color;extractor;palette;image;ciede2000;lab</PackageTags>
+    <PackageTags>color;extractor;palette;image;ciede2000;lab;dominant-color;imagesharp</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <!-- SourceLink for every packable project -->
+  <ItemGroup Condition="'$(IsPackable)' != 'false'">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.*" PrivateAssets="All" />
+  </ItemGroup>
 </Project>

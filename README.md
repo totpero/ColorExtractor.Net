@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://dotnet.microsoft.com/download"><img src="https://img.shields.io/badge/.NET-8.0%20|%209.0%20|%2010.0-512BD4?logo=dotnet" alt=".NET 8.0 | 9.0 | 10.0"></a>
-  <a href="https://github.com/totpero/ColorExtractor.Net/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License: MIT"></a>
+  <a href="https://github.com/totpero/ColorExtractor.Net/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License: Apache 2.0"></a>
   <a href="https://www.nuget.org/packages/ColorExtractor.Net"><img src="https://img.shields.io/nuget/v/ColorExtractor.Net?label=ColorExtractor.Net&logo=nuget" alt="NuGet ColorExtractor.Net"></a>
   <a href="https://www.nuget.org/packages/ColorExtractor.Net"><img src="https://img.shields.io/nuget/dt/ColorExtractor.Net?label=downloads&logo=nuget" alt="NuGet Downloads"></a>
 </p>
@@ -182,4 +182,4 @@ ColorExtractor.Net/
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+Apache 2.0 — see [LICENSE](LICENSE).
