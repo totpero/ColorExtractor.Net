@@ -4,7 +4,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <Version>0.1.0</Version>
+    <Version>0.4.0</Version>
 
     <!-- NuGet package defaults (test projects opt out via IsPackable=false) -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
