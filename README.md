@@ -1,4 +1,4 @@
-![ColorExtractor.Net logo](https://raw.githubusercontent.com/totpero/ColorExtractor.Net/main/assets/logo-readme.png)
+![ColorExtractor.Net logo](https://raw.githubusercontent.com/totpero/ColorExtractor.Net/main/icon.png)
 
 # ColorExtractor.Net
 

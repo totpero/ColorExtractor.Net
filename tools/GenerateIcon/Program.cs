@@ -104,19 +104,6 @@ image.Mutate(ctx =>
 image.Save(outputPath);
 Console.WriteLine($"Wrote {outputPath} ({size}x{size})");
 
-// Also emit a 220x220 README/preview variant alongside the full-size icon.
-const int previewSize = 220;
-string previewPath = System.IO.Path.Combine(
-    System.IO.Path.GetDirectoryName(outputPath) ?? ".",
-    "assets",
-    "logo-readme.png");
-Directory.CreateDirectory(System.IO.Path.GetDirectoryName(previewPath)!);
-using (var preview = image.Clone(c => c.Resize(previewSize, previewSize)))
-{
-    preview.Save(previewPath);
-}
-Console.WriteLine($"Wrote {previewPath} ({previewSize}x{previewSize})");
-
 static IPath BuildRoundedRect(float x, float y, float w, float h, float r)
 {
     var rect = new RectangleF(x, y, w, h);
