@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ColorExtractor.Net — dominant-color extraction for .NET</title>
+  <meta name="description" content="Extract the most visually significant colors from an image the way a human would. Cross-platform .NET port of thephpleague/color-extractor, using CIE Lab and CIEDE2000.">
+  <meta property="og:title" content="ColorExtractor.Net">
+  <meta property="og:description" content="Dominant-color extraction for .NET. CIE Lab + CIEDE2000. Cross-platform. PNG/JPEG/GIF/WebP.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/totpero/ColorExtractor.Net/main/icon.png">
+  <link rel="icon" href="icon.png">
+  <style>
+    :root {
+      --bg: #111418;
+      --surface: #191d23;
+      --surface-2: #20252d;
+      --border: #2a2f38;
+      --text: #F4E4C1;
+      --text-strong: #ffffff;
+      --text-muted: #9aa3b2;
+      --blue: #1E3A5F;
+      --blue-2: #2d5a90;
+      --amber: #E8A530;
+      --terracotta: #D14B3D;
+      --sage: #6EBE8F;
+      --cream: #F4E4C1;
+      --accent: var(--amber);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 85% -10%, rgba(232,165,48,0.18), transparent 60%),
+        radial-gradient(900px 500px at -10% 20%, rgba(30,58,95,0.45), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--amber); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero ------------------------------------------------------------ */
+    .hero {
+      text-align: center;
+      padding: 80px 0 56px;
+    }
+    .hero img.logo {
+      width: 132px;
+      height: 132px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 10px 32px rgba(0,0,0,0.5));
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text-strong);
+      letter-spacing: -0.02em;
+    }
+    .hero h1 span.grad {
+      background: linear-gradient(90deg, #E8A530 0%, #D14B3D 50%, #6EBE8F 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero .tagline {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 12px auto 28px;
+    }
+    .swatches {
+      display: flex; justify-content: center; gap: 10px; margin-bottom: 28px;
+    }
+    .swatches span {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+    }
+    .badges {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .badges img { height: 22px; }
+    .cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 10px;
+      font-weight: 600; font-size: 0.98rem;
+      border: 1px solid transparent;
+      transition: transform 0.08s ease, filter 0.15s ease;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn-primary { background: var(--amber); color: #1a1205; border-color: var(--amber); }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-ghost { background: transparent; color: var(--text-strong); border-color: var(--border); }
+    .btn-ghost:hover { background: var(--surface); }
+
+    /* Sections -------------------------------------------------------- */
+    section { padding: 48px 0; }
+    section + section { border-top: 1px solid var(--border); }
+    h2 {
+      font-size: 1.75rem; color: var(--text-strong); font-weight: 700;
+      margin-bottom: 18px; letter-spacing: -0.01em;
+    }
+    h3 {
+      font-size: 1.1rem; color: var(--text-strong); font-weight: 600;
+      margin-top: 18px; margin-bottom: 8px;
+    }
+    p { color: var(--text-muted); margin-bottom: 12px; }
+
+    code, pre {
+      font-family: "SF Mono", "JetBrains Mono", Consolas, Menlo, monospace;
+      font-size: 0.92rem;
+    }
+    p code, li code {
+      background: var(--surface-2); color: var(--cream);
+      padding: 1px 6px; border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    pre {
+      background: var(--surface); color: var(--cream);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 18px 20px; overflow-x: auto; line-height: 1.55;
+    }
+    pre .k { color: #ff9ac2; }   /* keyword */
+    pre .t { color: #7ec8ff; }   /* type */
+    pre .s { color: #b9e58c; }   /* string */
+    pre .c { color: #6c7380; font-style: italic; } /* comment */
+    pre .n { color: #d4b679; }   /* number */
+
+    /* Feature grid ---------------------------------------------------- */
+    .features {
+      display: grid; gap: 14px; margin-top: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .feature {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 20px;
+    }
+    .feature h3 { margin: 0 0 6px; color: var(--text-strong); font-size: 1.02rem; }
+    .feature p { margin: 0; font-size: 0.94rem; }
+
+    /* Link lists ------------------------------------------------------ */
+    .links { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .links a {
+      display: block; padding: 14px 18px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text-strong);
+      transition: border-color 0.15s ease;
+    }
+    .links a:hover { text-decoration: none; border-color: var(--amber); color: var(--amber); }
+
+    /* Footer ---------------------------------------------------------- */
+    footer {
+      padding: 32px 0 56px; text-align: center;
+      color: var(--text-muted); font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--amber); }
+  </style>
+</head>
+<body>
+  <main class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+      <img class="logo" src="icon.png" alt="ColorExtractor.Net logo">
+      <h1>ColorExtractor<span class="grad">.Net</span></h1>
+      <p class="tagline">
+        Extract the most visually significant colors from an image — the way a human would.
+        A cross-platform .NET port of
+        <a href="https://github.com/thephpleague/color-extractor">thephpleague/color-extractor</a>.
+      </p>
+
+      <div class="swatches" aria-hidden="true">
+        <span style="background:#1E3A5F"></span>
+        <span style="background:#E8A530"></span>
+        <span style="background:#D14B3D"></span>
+        <span style="background:#6EBE8F"></span>
+        <span style="background:#F4E4C1"></span>
+      </div>
+
+      <div class="badges">
+        <a href="https://dotnet.microsoft.com/download">
+          <img src="https://img.shields.io/badge/.NET-8.0%20%7C%209.0%20%7C%2010.0-512BD4?logo=dotnet" alt=".NET 8.0 | 9.0 | 10.0">
+        </a>
+        <a href="https://github.com/totpero/ColorExtractor.Net/blob/main/LICENSE">
+          <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License: Apache 2.0">
+        </a>
+        <a href="https://www.nuget.org/packages/ColorExtractor.Net">
+          <img src="https://img.shields.io/nuget/v/ColorExtractor.Net?label=NuGet&logo=nuget" alt="NuGet">
+        </a>
+        <a href="https://www.nuget.org/packages/ColorExtractor.Net">
+          <img src="https://img.shields.io/nuget/dt/ColorExtractor.Net?label=downloads&logo=nuget" alt="Downloads">
+        </a>
+      </div>
+
+      <div class="cta-group">
+        <a class="btn btn-primary" href="https://www.nuget.org/packages/ColorExtractor.Net">Install from NuGet</a>
+        <a class="btn btn-ghost" href="https://github.com/totpero/ColorExtractor.Net">View on GitHub</a>
+        <a class="btn btn-ghost" href="https://github.com/totpero/ColorExtractor.Net/wiki">Read the Wiki</a>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section>
+      <h2>Install</h2>
+      <pre><span class="k">dotnet</span> add package ColorExtractor.Net</pre>
+    </section>
+
+    <!-- Quick start -->
+    <section>
+      <h2>Quick start</h2>
+      <pre><span class="k">using</span> <span class="t">ColorExtractor.Net</span>;
+
+<span class="c">// 1. Load a palette from an image</span>
+<span class="k">var</span> palette = <span class="t">Palette</span>.FromFilename(<span class="s">"photo.jpg"</span>);
+
+<span class="c">// 2. Extract the top 5 visually distinct colors</span>
+<span class="k">var</span> extractor = <span class="k">new</span> <span class="t">ColorExtractor</span>(palette);
+<span class="k">int</span>[] colors = extractor.Extract(<span class="n">5</span>);
+
+<span class="c">// 3. Use them</span>
+<span class="k">foreach</span> (<span class="k">var</span> color <span class="k">in</span> colors)
+    <span class="t">Console</span>.WriteLine(<span class="t">Color</span>.FromIntToHex(color));
+<span class="c">// → #F3ED98, #E6614A, #A4C6D8, #3A3E4D, #CBA37A</span></pre>
+    </section>
+
+    <!-- Features -->
+    <section>
+      <h2>Why ColorExtractor.Net?</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>Perceptual, not numeric</h3>
+          <p>Colors are ranked in CIE Lab space and merged using CIEDE2000 delta-E — not naive RGB distance.</p>
+        </div>
+        <div class="feature">
+          <h3>Cross-platform, managed</h3>
+          <p>No native <code>libgd</code>. Pure .NET via <a href="https://github.com/SixLabors/ImageSharp">SixLabors.ImageSharp</a>: PNG, JPEG, GIF, WebP, BMP, TGA.</p>
+        </div>
+        <div class="feature">
+          <h3>Faithful to the reference</h3>
+          <p>Byte-for-byte output parity with the PHP library on lossless formats, including transparency blending.</p>
+        </div>
+        <div class="feature">
+          <h3>Multi-target</h3>
+          <p>.NET 8, 9, and 10. Single NuGet package, deterministic builds, SourceLink, symbol package included.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learn more -->
+    <section>
+      <h2>Learn more</h2>
+      <div class="links">
+        <a href="https://github.com/totpero/ColorExtractor.Net/wiki/Installation">Installation &rarr;</a>
+        <a href="https://github.com/totpero/ColorExtractor.Net/wiki/Quick-Start">Quick Start &rarr;</a>
+        <a href="https://github.com/totpero/ColorExtractor.Net/wiki/Library-Usage">Library Usage &rarr;</a>
+        <a href="https://github.com/totpero/ColorExtractor.Net/wiki/Algorithm">Algorithm &rarr;</a>
+        <a href="https://github.com/totpero/ColorExtractor.Net/wiki/PHP-Compatibility">PHP Compatibility &rarr;</a>
+        <a href="https://github.com/totpero/ColorExtractor.Net/wiki/Building-from-Source">Building from Source &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        &copy; <script>document.write(new Date().getFullYear())</script> totpero &middot;
+        <a href="https://github.com/totpero/ColorExtractor.Net/blob/main/LICENSE">Apache 2.0</a> &middot;
+        <a href="https://github.com/totpero/ColorExtractor.Net">GitHub</a> &middot;
+        <a href="https://www.nuget.org/packages/ColorExtractor.Net">NuGet</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
